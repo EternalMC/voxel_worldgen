@@ -6,5 +6,8 @@ This rust crate aims to create and mantain utilities, tools and algorithms used 
 
 The crate also contains and implementation of a minecraft-like world generator.
 
- [x] world gen
- [] breaking of block
+### Features
+
+ - [x] world gen
+ - [] breaking of blocks
+ 
