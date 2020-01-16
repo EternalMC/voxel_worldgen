@@ -1,4 +1,4 @@
-use ::nalgebra::{ Vector3, Pnt3, Vector2, Pnt2, cast };
+use ::nalgebra::{ Vector3, Point3, Vector2, Point2, cast };
 use std::ops::{ Index, IndexMut };
 use ::rnd::OctavesSeed;
 
