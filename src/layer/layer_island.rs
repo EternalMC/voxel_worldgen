@@ -1,6 +1,6 @@
 use std::rc::Rc;
 use super::{ GenLayer, LayerLCG };
-use ::nalgebra::{ Vector2, Pnt2 };
+use ::nalgebra::{ Vector2, Point2 };
 use ::gen::unit::GenUnit2;
 
 #[derive(Clone)]
