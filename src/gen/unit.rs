@@ -9,23 +9,23 @@ pub type GenUnit3<N> = GenUnit<N>;
 pub type GenUnit2<N> = GenUnit<N>;
 
 pub struct GenUnit<N> {
-    pub size: Vec3<u32>,
+    pub size: Vector3<u32>,
     pub data: Vec<N>,
 }
 
 impl<N: Sized> GenUnit<N> {
-    pub fn new3(size: Vec3<u32>, default: N) -> GenUnit<N> where N: Clone {
+    pub fn new3(size: Vector3<u32>, default: N) -> GenUnit<N> where N: Clone {
         let capacity: usize = cast(size.x * size.y * size.z);
         GenUnit {
             size: size,
             data: vec![default; capacity],
         }
     }
-    pub fn new2(size: Vec2<u32>, default: N) -> GenUnit<N> where N: Clone {
+    pub fn new2(size: Vector2<u32>, default: N) -> GenUnit<N> where N: Clone {
         GenUnit::new3(Vec3::new(size.x, 1, size.y), default)
     }
 
-    pub fn new2_from_vec(size: Vec2<u32>, data: Vec<N>) -> GenUnit<N> {
+    pub fn new2_from_vec(size: Vector2<u32>, data: Vec<N>) -> GenUnit<N> {
         let capacity: usize = cast(size.x * size.y);
         assert!(capacity == data.len());
         GenUnit {
@@ -33,7 +33,7 @@ impl<N: Sized> GenUnit<N> {
             data: data,
         }
     }
-    pub fn new3_from_vec(size: Vec3<u32>, data: Vec<N>) -> GenUnit<N> {
+    pub fn new3_from_vec(size: Vector3<u32>, data: Vec<N>) -> GenUnit<N> {
         let capacity: usize = cast(size.x * size.y * size.z);
         assert!(capacity == data.len());
         GenUnit {
@@ -42,8 +42,8 @@ impl<N: Sized> GenUnit<N> {
         }
     }
 
-    pub fn gen_simplex(seed: &OctavesSeed, pos: Pnt3<f64>, size: Vec3<u32>,
-                   scale: Vec3<f64>, mult: f64) -> GenUnit<f64> {
+    pub fn gen_simplex(seed: &OctavesSeed, pos: Point3<f64>, size: Vector3<u32>,
+                   scale: Vector3<f64>, mult: f64) -> GenUnit<f64> {
         let scaled = pos.to_vec() * scale;
 
         let capacity: usize = cast(size.x * size.y * size.z);
@@ -65,10 +65,10 @@ impl<N: Sized> GenUnit<N> {
         }
     }
 
-    pub fn to_idx_vec3(&self, pos: Pnt3<u32>) -> usize {
+    pub fn to_idx_vec3(&self, pos: Point3<u32>) -> usize {
         self.to_idx(pos.x, pos.y, pos.z)
     }
-    pub fn to_idx_vec2(&self, pos: Pnt2<u32>) -> usize {
+    pub fn to_idx_vec2(&self, pos: Point2<u32>) -> usize {
         self.to_idx(pos.x, 0, pos.y)
     }
     pub fn to_idx(&self, x: u32, y: u32, z: u32) -> usize {
@@ -79,7 +79,7 @@ impl<N: Sized> GenUnit<N> {
         (x + (z*self.size.x) + (y*self.size.x*self.size.z)) as usize
     }
 
-    pub fn from_idx(&self, mut idx: usize) -> Pnt3<u32> {
+    pub fn from_idx(&self, mut idx: usize) -> Point3<u32> {
         let x = idx % self.size.x as usize;
         idx /= self.size.x as usize;
         let z = idx % self.size.z as usize;
@@ -91,7 +91,7 @@ impl<N: Sized> GenUnit<N> {
     pub fn len(&self) -> usize {
         self.data.len()
     }
-    pub fn size2(&self) -> Vec2<u32> {
+    pub fn size2(&self) -> Vector2<u32> {
         Vec2::new(self.size.x, self.size.z)
     }
 }
@@ -104,27 +104,27 @@ impl<N> IndexMut<usize> for GenUnit<N> {
     fn index_mut(&mut self, index: usize) -> &mut N { &mut self.data[index] }
 }
 
-impl<N> Index<Pnt3<u32>> for GenUnit<N> {
+impl<N> Index<Point3<u32>> for GenUnit<N> {
     type Output = N;
-    fn index(&self, index: Pnt3<u32>) -> &N {
+    fn index(&self, index: Point3<u32>) -> &N {
         let idx = self.to_idx_vec3(index);
         &self.data[idx]
     }
 }
-impl<N> IndexMut<Pnt3<u32>> for GenUnit<N> {
-    fn index_mut(&mut self, index: Pnt3<u32>) -> &mut N {
+impl<N> IndexMut<Point3<u32>> for GenUnit<N> {
+    fn index_mut(&mut self, index: Point3<u32>) -> &mut N {
         let idx = self.to_idx_vec3(index);
         &mut self.data[idx]
     }
 }
-impl<N> Index<Pnt2<u32>> for GenUnit<N> {
+impl<N> Index<Point2<u32>> for GenUnit<N> {
     type Output = N;
     fn index(&self, index: Pnt2<u32>) -> &N {
         let idx = self.to_idx_vec2(index);
         &self.data[idx]
     }
 }
-impl<N> IndexMut<Pnt2<u32>> for GenUnit<N> {
+impl<N> IndexMut<Point2<u32>> for GenUnit<N> {
     fn index_mut(&mut self, index: Pnt2<u32>) -> &mut N {
         let idx = self.to_idx_vec2(index);
         &mut self.data[idx]
