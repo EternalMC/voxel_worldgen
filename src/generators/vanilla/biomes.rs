@@ -4,7 +4,7 @@ use ::layer::{ GenSimplex, SimplexNoiseType };
 use ::layer::{ GenSimpleFnTransformer, GenSimpleFnMixer };
 
 use ::num::Float;
-use ::nalgebra::Pnt2;
+use ::nalgebra::Point2;
 
 pub fn land_mask() -> GenL<bool> {
     let mut src: GenL<bool> = GenIsland::new(1, 4);
@@ -19,7 +19,7 @@ pub fn land_mask() -> GenL<bool> {
 
 pub fn biome_map() -> GenL<u8> {
 
-    fn make_biome_index(pos: Pnt2<i32>, temp: f32, wet: f32) -> (u8, u8) {
+    fn make_biome_index(pos: Point2<i32>, temp: f32, wet: f32) -> (u8, u8) {
         let temp_idx = (((temp + 1.0) / 2.0) * 6.0).floor() as u8;
         let wet_idx = (((wet + 1.0) / 2.0) * 4.0).floor() as u8;
         //(wet_idx * 8) + temp_idx
@@ -29,7 +29,7 @@ pub fn biome_map() -> GenL<u8> {
         (temp_idx, wet_idx)
     }
 
-    fn make_biome_val(pos: Pnt2<i32>, data: (u8, u8)) -> u8 {
+    fn make_biome_val(pos: Point2<i32>, data: (u8, u8)) -> u8 {
         let (temp, wet) = data;
         if temp > 3 {
             0
