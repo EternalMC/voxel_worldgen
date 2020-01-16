@@ -1,6 +1,6 @@
 use super::{ GenLayer, LayerLCG };
 use std::rc::Rc;
-use ::nalgebra::{ Vector2, Pnt2 };
+use ::nalgebra::{ Vector2, Point2 };
 use ::gen::unit::GenUnit2;
 
 fn frequent_or_random<T>(rand: &mut LayerLCG, i1: T, i2: T, i3: T, i4: T) -> T where T: PartialEq {
