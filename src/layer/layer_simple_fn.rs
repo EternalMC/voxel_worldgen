@@ -28,10 +28,10 @@ impl <O> GenLayer<O> for GenSimpleFn<O> {
 
 pub struct GenSimpleFnTransformer<I, O> {
     fun: fn(Point2<i32>, I) -> O,
-    source: Rc<GenLayer<I>>,
+    source: Rc<dyn GenLayer<I>>,
 }
 impl <I, O> GenSimpleFnTransformer<I, O> {
-    pub fn new(fun: fn(Point2<i32>, I) -> O, source: Rc<GenLayer<I>>) -> Rc<GenSimpleFnTransformer<I, O>> {
+    pub fn new(fun: fn(Point2<i32>, I) -> O, source: Rc<dyn GenLayer<I>>) -> Rc<GenSimpleFnTransformer<I, O>> {
         Rc::new(GenSimpleFnTransformer {
             fun: fun,
             source: source,
@@ -57,12 +57,12 @@ impl <I: Copy, O> GenLayer<O> for GenSimpleFnTransformer<I, O> {
 
 pub struct GenSimpleFnMixer<I1, I2, O> {
     fun: fn(Point2<i32>, I1, I2) -> O,
-    source1: Rc<GenLayer<I1>>,
-    source2: Rc<GenLayer<I2>>,
+    source1: Rc<dyn GenLayer<I1>>,
+    source2: Rc<dyn GenLayer<I2>>,
 }
 impl <I1, I2, O> GenSimpleFnMixer<I1, I2, O> {
     pub fn new(fun: fn(Point2<i32>, I1, I2) -> O, 
-               source1: Rc<GenLayer<I1>>, source2: Rc<dyn GenLayer<I2>>
+               source1: Rc<dyn GenLayer<I1>>, source2: Rc<dyn GenLayer<I2>>
                ) -> Rc<GenSimpleFnMixer<I1, I2, O>> {
         Rc::new(GenSimpleFnMixer {
             fun: fun,
