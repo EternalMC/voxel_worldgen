@@ -43,11 +43,11 @@ impl WorldGeneratorState {
     }
 }
 
-pub fn generate_chunk(state: &WorldGeneratorState, chunk_pos: Pnt2<i32>) -> GenUnit3<u8> {
+pub fn generate_chunk(state: &WorldGeneratorState, chunk_pos: Point2<i32>) -> GenUnit3<u8> {
     let biomes_gen = biomes::biome_map();
     let biomes = biomes_gen.gen(10, chunk_pos*4, Vec2::new(9, 9));
 
-    let size: Vec2<u32> = Vec2::new(5, 5);
+    let size: Vector2<u32> = Vec2::new(5, 5);
     let density_field = gen_height_field(state, &biomes, chunk_pos * 4, size);
     let mut block_array = lerp_height_field(&density_field, 
                                             Vec3::new(5, 33, 5), Vec3::new(4, 8, 4));
@@ -63,5 +63,5 @@ use rand::{ XorShiftRng };
 pub fn test_generate_chunk(chunk_pos: &[i32; 2]) -> Vec<u8> {
     let mut rng = XorShiftRng::new_unseeded(); 
     let world_gen_state = WorldGeneratorState::new(&mut rng);
-    generate_chunk(&world_gen_state, Pnt2::new(chunk_pos[0], chunk_pos[1])).data
+    generate_chunk(&world_gen_state, Point2::new(chunk_pos[0], chunk_pos[1])).data
 }
