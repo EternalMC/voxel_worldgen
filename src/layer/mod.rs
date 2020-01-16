@@ -21,7 +21,7 @@ use ::nalgebra::{ Vector2, Point2 };
 use ::gen::unit::GenUnit2;
 
 pub trait GenLayer<O: Sized> {
-    fn gen(&self, world_seed: i64, pos: Pnt2<i32>, size: Vec2<u32>) -> GenUnit2<O>;
+    fn gen(&self, world_seed: i64, pos: Point2<i32>, size: Vector2<u32>) -> GenUnit2<O>;
 }
 
 pub type GenL<O> = Rc<GenLayer<O>>;
