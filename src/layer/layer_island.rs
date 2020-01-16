@@ -17,7 +17,7 @@ impl GenIsland {
     }
 }
 impl GenLayer<bool> for GenIsland {
-    fn gen(&self, seed: i64, pos: Pnt2<i32>, size: Vec2<u32>) -> GenUnit2<bool> {
+    fn gen(&self, seed: i64, pos: Point2<i32>, size: Vector2<u32>) -> GenUnit2<bool> {
         let mut lcg = LayerLCG::new(self.seed, seed);
         let mut buf = Vec::with_capacity((size.x*size.y) as usize);
 
