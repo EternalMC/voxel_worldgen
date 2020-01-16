@@ -24,7 +24,7 @@ fn get_chunk_idx(pos_x: i64, pos_y: i64, pos_z: i64) -> usize {
     (pos_x + (pos_z*16) + (pos_y*16*16)) as usize
 }
 
-pub fn generate(chunk_data: &mut GenUnit3<u8>, world_seed: u32, chunk_pos: Pnt2<i32>) {
+pub fn generate(chunk_data: &mut GenUnit3<u8>, world_seed: u32, chunk_pos: Point2<i32>) {
     let range = RANGE_CHUNKS as i32;
 
     for current_x in (chunk_pos[0]-range)..(chunk_pos[0]+range+1) {
@@ -41,7 +41,7 @@ pub fn generate(chunk_data: &mut GenUnit3<u8>, world_seed: u32, chunk_pos: Pnt2<
     }
 }
 
-pub fn single_generate<R>(chunk_data: &mut GenUnit3<u8>, rand: &mut R, current: Pnt2<i32>, 
+pub fn single_generate<R>(chunk_data: &mut GenUnit3<u8>, rand: &mut R, current: Point2<i32>, 
                           target: Pnt2<i32>) where R: Rng {
     let mut source_num = {
         let t1 = rand.gen_range(0, 15);
@@ -53,7 +53,7 @@ pub fn single_generate<R>(chunk_data: &mut GenUnit3<u8>, rand: &mut R, current: 
     }
 
     for current_source in 0..source_num {
-        let pos = Pnt3::new(
+        let pos = Point3::new(
             current[0]*16 + rand.gen_range(0, 16),
             {
                 let t1 = rand.gen_range(0, 120);
@@ -84,18 +84,18 @@ pub fn single_generate<R>(chunk_data: &mut GenUnit3<u8>, rand: &mut R, current: 
 }
 
 pub fn carve_dead_cave<R>(chunk_data: &mut GenUnit3<u8>, rand: &mut R, 
-                          chunk_pos: Pnt2<i32>, cave_pos: Pnt3<f64>) where R: Rng {
+                          chunk_pos: Point2<i32>, cave_pos: Point3<f64>) where R: Rng {
     let width_rand = 1.0 + rand.next_f32() * 6.0;
     carve_cave(chunk_data, rand, chunk_pos, cave_pos, &[0.0, 0.0], -1, -1, 
                width_rand, 0.5)
 }
 
-pub fn carve_cave<R>(chunk_data: &mut GenUnit3<u8>, rand: &mut R, chunk_pos: Pnt2<i32>,
-                     cave_pos_start: Pnt3<f64>, cave_angle_start: &[f32; 2],
+pub fn carve_cave<R>(chunk_data: &mut GenUnit3<u8>, rand: &mut R, chunk_pos: Point2<i32>,
+                     cave_pos_start: Point3<f64>, cave_angle_start: &[f32; 2],
                      mut cave_len_progress: i32, mut cave_len_total: i32,
                      horizontal_stretch: f32, vertical_stretch: f32) where R: Rng {
-    let chunk_center: Pnt2<i64> = cast(chunk_pos * 16 + 8);
-    let chunk_center_float: Pnt2<f64> = cast(chunk_center);
+    let chunk_center: Point2<i64> = cast(chunk_pos * 16 + 8);
+    let chunk_center_float: Point2<f64> = cast(chunk_center);
     let range_blocks = (RANGE_CHUNKS*16 - 16);
 
     let mut pos = cave_pos_start;
@@ -138,7 +138,7 @@ pub fn carve_cave<R>(chunk_data: &mut GenUnit3<u8>, rand: &mut R, chunk_pos: Pnt
         ang_delta[1] *= 0.75;
         ang_delta[1] += (rand.next_f32() - rand.next_f32()) * rand.next_f32() * 4.0;
 
-        let pos2d = Pnt2::new(pos[0], pos[2]);
+        let pos2d = Point2::new(pos[0], pos[2]);
 
         if !unforkable_cave && cave_len_progress == next_fork_distance && horizontal_stretch > 1.0 && cave_len_total > 0 {
             let mut rng1: XorShiftRng = rand.gen();
@@ -155,7 +155,7 @@ pub fn carve_cave<R>(chunk_data: &mut GenUnit3<u8>, rand: &mut R, chunk_pos: Pnt
         }
 
         if unforkable_cave || !rand.gen_weighted_bool(4) {
-            let center_dist: Vec2<f64> = pos2d - chunk_center_float;
+            let center_dist: Vector2<f64> = pos2d - chunk_center_float;
             let cave_len_left = cave_len_total - cave_len_progress;
             let max_carve_size = horizontal_stretch + 2.0 + 16.0;
 
@@ -168,13 +168,13 @@ pub fn carve_cave<R>(chunk_data: &mut GenUnit3<u8>, rand: &mut R, chunk_pos: Pnt
             let upper_carve_bound = chunk_center_float 
                 + 16.0 + (horizontal_scale_factor as f64 * 2.0);
             if partial_ge(&pos2d, &lower_carve_bound) && partial_le(&pos2d, &upper_carve_bound) {
-                let mut carve_box_start = Pnt3::new(
+                let mut carve_box_start = Point3::new(
                     (pos.x - horizontal_scale_factor as f64).floor() as i64 
                         - (chunk_pos[0] as i64 * 16) - 1,
                     (pos.y - vertical_scale_factor as f64).floor() as i64 - 1,
                     (pos.z - horizontal_scale_factor as f64).floor() as i64
                         - (chunk_pos[1] as i64 * 16) - 1);
-                let mut carve_box_end = Pnt3::new(
+                let mut carve_box_end = Point3::new(
                     (pos.x + horizontal_scale_factor as f64).floor() as i64 
                         - (chunk_pos[0] as i64 * 16) + 1,
                     (pos.y + vertical_scale_factor as f64).floor() as i64 + 1,
@@ -203,8 +203,8 @@ pub fn carve_cave<R>(chunk_data: &mut GenUnit3<u8>, rand: &mut R, chunk_pos: Pnt
 }
 
 fn carve_cave_step(chunk_data: &mut GenUnit3<u8>, 
-                   chunk_pos: Pnt2<i32>, pos: Pnt3<f64>,
-                   carve_box_start: Pnt3<i64>, carve_box_end: Pnt3<i64>, 
+                   chunk_pos: Point2<i32>, pos: Point3<f64>,
+                   carve_box_start: Point3<i64>, carve_box_end: Point3<i64>, 
                    horizontal_scale_factor: f32, vertical_scale_factor: f32) {
 
     for curr_x in carve_box_start[0]..carve_box_end[0] {
@@ -263,8 +263,8 @@ fn block_is_carvable(curr: u8, above: u8) -> bool {
     above != BLOCK_WATER && above != BLOCK_FLOWING_WATER
 }
 
-fn scan_water(chunk_data: &mut GenUnit3<u8>, carve_box_start: Pnt3<i64>, 
-              carve_box_end: Pnt3<i64>) -> bool {
+fn scan_water(chunk_data: &mut GenUnit3<u8>, carve_box_start: Point3<i64>, 
+              carve_box_end: Point3<i64>) -> bool {
     for curr_x in carve_box_start[0]..carve_box_end[0] {
         for curr_z in carve_box_start[2]..carve_box_end[2] {
             for curr_y in carve_box_start[1]..carve_box_end[1] {
