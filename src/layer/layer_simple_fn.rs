@@ -1,6 +1,6 @@
 use super::{ GenLayer };
 use std::rc::Rc;
-use ::nalgebra::{ Vector2, Pnt2 };
+use ::nalgebra::{ Vector2, Point2 };
 use ::gen::unit::GenUnit2;
 
 pub struct GenSimpleFn<O> {
