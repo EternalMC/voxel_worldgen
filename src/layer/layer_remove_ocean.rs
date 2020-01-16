@@ -19,9 +19,9 @@ impl GenReduceOcean {
     }
 }
 impl GenLayer<bool> for GenReduceOcean {
-    fn gen(&self, seed: i64, pos: Pnt2<i32>, size: Vec2<u32>) -> GenUnit2<bool> {
+    fn gen(&self, seed: i64, pos: Point2<i32>, size: Vector2<u32>) -> GenUnit2<bool> {
         let mut lcg = LayerLCG::new(self.seed, seed);
-        let source = self.source.gen(seed, pos-Vec2::new(1, 1), size+Vec2::new(2, 2));
+        let source = self.source.gen(seed, pos-Vector2::new(1, 1), size+Vector2::new(2, 2));
         let mut sink = Vec::with_capacity((size.x * size.y) as usize);
 
         for y in 0..size.y {
