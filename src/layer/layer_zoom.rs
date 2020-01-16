@@ -25,12 +25,12 @@ pub enum ZoomType {
 
 #[derive(Clone)]
 pub struct GenZoom<I> {
-    source: Rc<GenLayer<I>>,
+    source: Rc<dyn GenLayer<I>>,
     seed: i64,
     zoom_type: ZoomType,
 }
 impl<I> GenZoom<I> {
-    pub fn new(seed: i64, zoom_type: ZoomType, source: Rc<GenLayer<I>>
+    pub fn new(seed: i64, zoom_type: ZoomType, source: Rc<dyn GenLayer<I>>
                ) -> Rc<GenZoom<I>> {
         Rc::new(GenZoom {
             source: source,
