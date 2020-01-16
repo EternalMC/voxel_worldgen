@@ -62,7 +62,7 @@ pub struct GenSimpleFnMixer<I1, I2, O> {
 }
 impl <I1, I2, O> GenSimpleFnMixer<I1, I2, O> {
     pub fn new(fun: fn(Point2<i32>, I1, I2) -> O, 
-               source1: Rc<GenLayer<I1>>, source2: Rc<GenLayer<I2>>
+               source1: Rc<GenLayer<I1>>, source2: Rc<dyn GenLayer<I2>>
                ) -> Rc<GenSimpleFnMixer<I1, I2, O>> {
         Rc::new(GenSimpleFnMixer {
             fun: fun,
