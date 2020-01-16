@@ -2,7 +2,7 @@ use super::{ GenLayer, LayerLCG };
 use ::simplex_normalized::normalize_simplex;
 use ::noise::{ Seed, open_simplex2 };
 use std::rc::Rc;
-use ::nalgebra::{ Vector2, Pnt2 };
+use ::nalgebra::{ Vector2, Point2 };
 use ::gen::unit::GenUnit2;
 
 #[derive(Clone)]
