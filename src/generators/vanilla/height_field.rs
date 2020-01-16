@@ -2,7 +2,7 @@ use super::WorldGeneratorState;
 use super::util::{ gen_noise_octaves, parabolic_field, height_field_idx };
 use super::util::{ denormalize_clamp };
 
-use ::nalgebra::{ Vec2, Vec3, Pnt2, cast };
+use ::nalgebra::{ Vector2, Vector3, Pnt2, cast };
 use ::gen::unit::{ GenUnit2, GenUnit3 };
 
 use super::constants::*;
