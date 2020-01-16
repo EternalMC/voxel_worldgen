@@ -1,7 +1,7 @@
 use ::rand::{ Rng, Rand, XorShiftRng, SeedableRng };
 use std::f32;
 use ::nalgebra::{ cast, norm };
-use ::nalgebra::{ Pnt2, Pnt3, Vector2, Vector3 };
+use ::nalgebra::{ Point2, Point3, Vector2, Vector3 };
 use ::nalgebra::{ partial_le, partial_ge };
 use ::gen::unit::GenUnit3;
 
