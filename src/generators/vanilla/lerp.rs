@@ -8,9 +8,9 @@ use ::nalgebra::{ Point3, Vector3 };
 /// values in the given array, and rasterize into a rough representation of
 /// the chunk. (water/lava and stone terrain only)
 pub fn lerp_height_field(density_field: &GenUnit3<f64>, 
-                         size: Vec3<u32>, scale: Vec3<u32>) -> GenUnit3<u8> {
+                         size: Vector3<u32>, scale: Vector3<u32>) -> GenUnit3<u8> {
 
-    let out_size = (size - Vec3::new(1, 1, 1)) *  scale;
+    let out_size = (size - Vector3::new(1, 1, 1)) *  scale;
     let mut out = GenUnit3::new3(out_size, 0);
 
     for density_field_x in 0..(size[0]-1) {
