@@ -7,7 +7,7 @@
 
 use ::rnd::OctavesSeed;
 use ::rand::{ Rng, Rand };
-use ::nalgebra::{ Vector2, Pnt2 };
+use ::nalgebra::{ Vector2, Point2 };
 
 pub mod lerp;
 pub mod height_field;
