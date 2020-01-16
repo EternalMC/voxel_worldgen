@@ -17,7 +17,7 @@ pub use self::layer_simplex::{ GenSimplex, SimplexNoiseType };
 mod layer_simple_fn;
 pub use self::layer_simple_fn::{ GenSimpleFn, GenSimpleFnTransformer, GenSimpleFnMixer };
 
-use ::nalgebra::{ Vector2, Pnt2 };
+use ::nalgebra::{ Vector2, Point2 };
 use ::gen::unit::GenUnit2;
 
 pub trait GenLayer<O: Sized> {
