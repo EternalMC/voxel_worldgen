@@ -1,7 +1,7 @@
 use super::util::{ chunk_data_idx, height_field_idx };
 use super::constants::*;
 use ::gen::unit::{ GenUnit2, GenUnit3 };
-use ::nalgebra::{ Pnt3, Vec3 };
+use ::nalgebra::{ Pnt3, Vector3 };
 
 /// Takes an array of density values in a chunk, usually by the gen_height_field
 /// function. This will linearly interpolate between the values in the density
