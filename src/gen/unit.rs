@@ -125,7 +125,7 @@ impl<N> Index<Point2<u32>> for GenUnit<N> {
     }
 }
 impl<N> IndexMut<Point2<u32>> for GenUnit<N> {
-    fn index_mut(&mut self, index: Pnt2<u32>) -> &mut N {
+    fn index_mut(&mut self, index: Point2<u32>) -> &mut N {
         let idx = self.to_idx_vec2(index);
         &mut self.data[idx]
     }
