@@ -40,7 +40,7 @@ impl<I> GenZoom<I> {
     }
 }
 impl<I> GenLayer<I> for GenZoom<I> where I: PartialEq + Copy {
-    fn gen(&self, seed: i64, pos: Pnt2<i32>, size: Vec2<u32>) -> GenUnit2<I> {
+    fn gen(&self, seed: i64, pos: Point2<i32>, size: Vector2<u32>) -> GenUnit2<I> {
         let mut lcg = LayerLCG::new(self.seed, seed);
 
         let source_x = pos.x >> 1;
