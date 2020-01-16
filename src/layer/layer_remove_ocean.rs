@@ -6,11 +6,11 @@ use ::gen::unit::GenUnit2;
 #[derive(Clone)]
 pub struct GenReduceOcean {
     seed: i64,
-    source: Rc<GenLayer<bool>>,
+    source: Rc<dyn GenLayer<bool>>,
     factor: i32,
 }
 impl GenReduceOcean {
-    pub fn new(seed: i64, factor: i32, source: Rc<GenLayer<bool>>) -> Rc<GenReduceOcean> {
+    pub fn new(seed: i64, factor: i32, source: Rc<dyn GenLayer<bool>>) -> Rc<GenReduceOcean> {
         Rc::new(GenReduceOcean {
             source: source,
             seed: seed,
