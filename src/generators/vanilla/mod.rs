@@ -7,7 +7,7 @@
 
 use ::rnd::OctavesSeed;
 use ::rand::{ Rng, Rand };
-use ::nalgebra::{ Vec2, Pnt2 };
+use ::nalgebra::{ Vector2, Pnt2 };
 
 pub mod lerp;
 pub mod height_field;
@@ -19,7 +19,7 @@ pub mod caves;
 
 pub use self::lerp::lerp_height_field;
 pub use self::height_field::gen_height_field;
-use ::nalgebra::Vec3;
+use ::nalgebra::Vector3;
 use ::gen::unit::GenUnit3;
 
 pub struct WorldGeneratorState {
