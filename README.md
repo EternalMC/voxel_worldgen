@@ -8,6 +8,7 @@ The crate also contains and implementation of a minecraft-like world generator.
 
 ### Features
 
+ - [ ] Compiles
  - [x] world gen
  - [ ] breaking of blocks
  
